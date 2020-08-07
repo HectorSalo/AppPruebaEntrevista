@@ -12,6 +12,7 @@
     <string name="second_fragment_label">Datos del Emisor</string>
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
+    <string name="btn_totalizar">Totalizar</string>
 
     <string name="nombre_cliente">Nombre del Cliente:</string>
     <string name="apellido_cliente">Apellido del Cliente:</string>
@@ -23,4 +24,6 @@
     <string name="descripcion">Descripción del producto:</string>
     <string name="codigo">Código:</string>
     <string name="precio">Precio:</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="inicio_monto_subtotal">0.00</string>
 </resources>
