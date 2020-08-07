@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">The Factory HKA</string>
+    <string name="title_main">Bienvenido a la App de Prueba de The Factory HKA.\nEste demo le permitirá generar Recibos de Ventas sin valor fiscal y almacenarlos localmente.\nDe esta manera,
+        podrá tener una mejor idea de los requisitos mínimos de la aplicación que debe desarrollar.</string>
+    <string name="btn_nuevo_recibo">Nuevo Recibo</string>
+    <string name="btn_lista_recibo">Lista de Recibos Generados</string>
+
+    <string name="texto_vacio"> </string>
+    <string name="title_activity_nuevo_recibo">Generar Recibo de Venta</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">Datos del Cliente</string>
+    <string name="second_fragment_label">Datos del Emisor</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+
+    <string name="nombre_cliente">Nombre del Cliente:</string>
+    <string name="apellido_cliente">Apellido del Cliente:</string>
+    <string name="cedula_cliente">Cédula del Cliente:</string>
+
+    <string name="nombre_emisor">Razón Social del Emisor:</string>
+    <string name="rif">N° RIF:</string>
+
+    <string name="descripcion">Descripción del producto:</string>
+    <string name="codigo">Código:</string>
+    <string name="precio">Precio:</string>
+</resources>
