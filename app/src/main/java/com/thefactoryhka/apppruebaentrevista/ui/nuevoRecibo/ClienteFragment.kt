@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.fragment_cliente.*
  */
 class ClienteFragment : Fragment() {
 
+    var cliente = ConstructorRecibo()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,8 +28,19 @@ class ClienteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        println(cliente.nombre)
+        if (!cliente.nombre.isNullOrEmpty()) {
+            et_nombre.setText(cliente.nombre)
+        }
+        //if (cliente.apellido.isNullOrEmpty()) et_nombre.setText(cliente.apellido)
+        //if (cliente.cedula > 0) et_nombre.setText(cliente.cedula)
+
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             if (validarDatos()) {
+                cliente.nombre = et_nombre.text.toString()
+                println(cliente.nombre)
+                cliente.apellido = et_apellido.text.toString()
+                cliente.cedula = et_cedula.text.toString().toInt()
                 findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
             }
         }
@@ -48,6 +61,11 @@ class ClienteFragment : Fragment() {
         }
         if (et_cedula.text.isNullOrEmpty()) {
             outlined_cedula.error = "Debe ingresar la cédula"
+            return false
+        }
+        var cedula = et_cedula.text.toString().toInt()
+        if(cedula < 1) {
+            outlined_cedula.error = "La cédula no puede ser cero"
             return false
         }
         return true

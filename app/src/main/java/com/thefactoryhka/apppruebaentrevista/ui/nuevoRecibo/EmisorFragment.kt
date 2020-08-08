@@ -57,6 +57,11 @@ class EmisorFragment : Fragment() {
             outlined_rif.error = "Debe ingresar el RIF"
             return false
         }
+        var rif = et_rif.text.toString().toInt()
+        if (rif < 1) {
+            outlined_rif.error = "El RIF no puede ser cero"
+            return false
+        }
         return true
     }
 }

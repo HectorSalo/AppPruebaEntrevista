@@ -36,5 +36,13 @@
         <action
             android:id="@+id/action_productoFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_productoFragment_to_totalFragment"
+            app:destination="@id/totalFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/totalFragment"
+        android:name="com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.TotalFragment"
+        android:label="fragment_total"
+        tools:layout="@layout/fragment_total" />
 </navigation>
