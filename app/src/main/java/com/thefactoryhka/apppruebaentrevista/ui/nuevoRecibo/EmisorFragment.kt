@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import androidx.activity.addCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.thefactoryhka.apppruebaentrevista.R
-import com.thefactoryhka.apppruebaentrevista.ui.baseDeDatos.Emisor
-import com.thefactoryhka.apppruebaentrevista.ui.baseDeDatos.ReciboDB
-import kotlinx.android.synthetic.main.fragment_cliente.*
+import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Emisor
+import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
 import kotlinx.android.synthetic.main.fragment_emisor.*
 import kotlinx.coroutines.launch
 
@@ -32,6 +32,10 @@ class EmisorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+        }
 
         val room = Room
             .databaseBuilder(requireContext(), ReciboDB::class.java, "recibo")

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thefactoryhka.apppruebaentrevista.R
 import kotlinx.android.synthetic.main.item_producto.view.*
 
-class AdapterProducto (private var listProduct: ArrayList<ConstructorRecibo>, private val mctx: Context?) :
+class AdapterProducto (private var listProduct: ArrayList<ConstructorProducto>, private val mctx: Context?) :
     RecyclerView.Adapter<AdapterProducto.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mctx).inflate(R.layout.item_producto, parent, false) as View
@@ -17,7 +17,7 @@ class AdapterProducto (private var listProduct: ArrayList<ConstructorRecibo>, pr
         return ViewHolder(view)
     }
 
-    class ViewHolder (var view: View) : RecyclerView.ViewHolder(view){
+    class ViewHolder (view: View) : RecyclerView.ViewHolder(view){
         val tvCodigo: TextView = view.tv_codigo
         val tvPrecioCantidad: TextView = view.tv_cantidad_precio
         val tvDescripcion: TextView = view.tv_descripcion
@@ -38,7 +38,7 @@ class AdapterProducto (private var listProduct: ArrayList<ConstructorRecibo>, pr
         holder.tvTotal.text = resultado.toString()
     }
 
-    fun updateList (newList: ArrayList<ConstructorRecibo>) {
+    fun updateList (newList: ArrayList<ConstructorProducto>) {
         listProduct = ArrayList()
         listProduct = newList
         notifyDataSetChanged()

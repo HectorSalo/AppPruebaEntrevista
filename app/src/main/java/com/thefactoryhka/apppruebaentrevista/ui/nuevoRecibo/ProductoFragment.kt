@@ -7,18 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.thefactoryhka.apppruebaentrevista.R
+import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Producto
+import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
 import kotlinx.android.synthetic.main.fragment_producto.*
+import kotlinx.coroutines.launch
 
 class ProductoFragment : Fragment() {
 
     private lateinit var viewAdapterProducto: AdapterProducto
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var listProducto: ArrayList<ConstructorRecibo>
+    private lateinit var listProducto: ArrayList<ConstructorProducto>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +37,10 @@ class ProductoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(R.id.action_productoFragment_to_SecondFragment)
+        }
+
         listProducto = ArrayList()
         viewManager = LinearLayoutManager(context)
         viewAdapterProducto = AdapterProducto(listProducto, context)
@@ -38,14 +48,44 @@ class ProductoFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapterProducto
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
+        }
+
+        val room = Room
+            .databaseBuilder(requireContext(), ReciboDB::class.java, "recibo")
+            .fallbackToDestructiveMigration()
+            .build()
+
+        lifecycleScope.launch {
+            var productos = room.productoDao().getAll()
+            if (productos != null) {
+                for (i in 0 until productos.size) {
+                    val item = ConstructorProducto()
+                    item.descripcion = productos[i].descripcion
+                    item.precio = productos[i].precio
+                    item.cantidad = productos[i].cantidad
+                    item.codigo = productos[i].codigo
+
+                    listProducto.add(item)
+                }
+                viewAdapterProducto.updateList(listProducto)
+                var subtotal = 0.0
+                for (i in 0 until listProducto.size) {
+                    subtotal += listProducto[i].precio * listProducto[i].cantidad
+                    var resultado : Double = String.format("%.2f", subtotal).toDouble()
+                    tv_subtotal.text = resultado.toString()
+                }
+            }
         }
 
         view.findViewById<Button>(R.id.button_anterior).setOnClickListener {
             findNavController().navigate(R.id.action_productoFragment_to_SecondFragment)
         }
         view.findViewById<Button>(R.id.button_totalizar).setOnClickListener {
-
+            if (listProducto.isNotEmpty()) {
+                findNavController().navigate(R.id.action_productoFragment_to_totalFragment)
+            } else {
+                Toast.makeText(context, "Debe ingresar al menos un producto para totalizar", Toast.LENGTH_LONG).show()
+            }
         }
 
         imageButton_add_cantidad.setOnClickListener {
@@ -62,7 +102,12 @@ class ProductoFragment : Fragment() {
 
         imageButton_add_producto.setOnClickListener {
             if (validarDatos()) {
-                var item = ConstructorRecibo()
+                var productoBD = Producto(listProducto.size, et_descripcion.text.toString(), et_codigo.text.toString().toInt(), et_precio.text.toString().toDouble(), et_cantidad.text.toString().toInt())
+                lifecycleScope.launch {
+                    room.productoDao().insert(productoBD)
+                }
+
+                var item = ConstructorProducto()
                 item.descripcion = et_descripcion.text.toString()
                 item.codigo = et_codigo.text.toString().toInt()
                 item.cantidad = et_cantidad.text.toString().toInt()

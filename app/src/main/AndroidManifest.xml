@@ -9,11 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.listRecibos.ListRecibosActivity"
+            android:label="@string/title_activity_lista_recibos"/>
         <activity
             android:name=".ui.nuevoRecibo.NuevoReciboActivity"
             android:label="@string/title_activity_nuevo_recibo"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.LaunchActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.LaunchActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

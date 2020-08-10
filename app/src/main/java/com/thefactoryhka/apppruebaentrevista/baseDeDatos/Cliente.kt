@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.baseDeDatos
+package com.thefactoryhka.apppruebaentrevista.baseDeDatos
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

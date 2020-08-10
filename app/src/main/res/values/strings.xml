@@ -7,12 +7,15 @@
 
     <string name="texto_vacio"> </string>
     <string name="title_activity_nuevo_recibo">Generar Recibo de Venta</string>
+    <string name="title_activity_lista_recibos">Recibos Almacenados</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Datos del Cliente</string>
     <string name="second_fragment_label">Datos del Emisor</string>
+    <string name="salir">Salir</string>
     <string name="next">Siguiente</string>
     <string name="previous">Anterior</string>
-    <string name="btn_totalizar">Totalizar</string>
+    <string name="totalizar">Totalizar</string>
+    <string name="finalizr">Finalizar</string>
 
     <string name="nombre_cliente">Nombre del Cliente:</string>
     <string name="apellido_cliente">Apellido del Cliente:</string>
@@ -27,5 +30,8 @@
     <string name="subtotal">Subtotal</string>
     <string name="inicio_monto_subtotal">0.00</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total">Total</string>
+    <string name="title_recibo">Recibo de Venta</string>
+
+    <string name="lista_vacia">No tiene Recibos de Ventas guardados.</string>
 </resources>

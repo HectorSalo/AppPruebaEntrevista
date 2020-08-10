@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.baseDeDatos
+package com.thefactoryhka.apppruebaentrevista.baseDeDatos
 
 import androidx.room.*
 
@@ -6,7 +6,7 @@ import androidx.room.*
 interface EmisorDao {
 
     @Query("SELECT * FROM emisor_table")
-    fun getAll(): List<Emisor>
+    suspend fun getAll(): List<Emisor>
 
 
     @Query("SELECT * FROM emisor_table WHERE id = :id")
