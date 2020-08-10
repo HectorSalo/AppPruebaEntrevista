@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thefactoryhka.apppruebaentrevista.R
 import com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.ConstructorProducto
 import kotlinx.android.synthetic.main.item_producto.view.*
+import java.text.DecimalFormat
 
 class AdapterListRecibos (private var listRecibos: ArrayList<ConstructorRecibo>, private val mctx: Context?) :
     RecyclerView.Adapter<AdapterListRecibos.ViewHolder>() {
@@ -31,10 +32,12 @@ class AdapterListRecibos (private var listRecibos: ArrayList<ConstructorRecibo>,
     override fun getItemCount(): Int = listRecibos.size
 
     override fun onBindViewHolder(holder: AdapterListRecibos.ViewHolder, position: Int) {
+        val dec = DecimalFormat("#,###.##")
+        var total = listRecibos[position].total
         holder.tvCliente.text = "Cliente: ${listRecibos[position].cliente}"
         holder.tvEmisor.text = "Emisor: ${listRecibos[position].emisor}"
         holder.tvCantidad.text = "Cantidad de items: ${listRecibos[position].cantidadItems}"
-        holder.tvTotal.text = "Monto total ${listRecibos[position].total}"
+        holder.tvTotal.text = "Monto total ${dec.format(total)}"
         holder.tvCliente.textSize = 18f
         holder.tvTotal.textSize = 16f
     }

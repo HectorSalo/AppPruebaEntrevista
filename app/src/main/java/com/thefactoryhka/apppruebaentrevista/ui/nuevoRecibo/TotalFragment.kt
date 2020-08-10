@@ -17,6 +17,7 @@ import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
 import kotlinx.android.synthetic.main.activity_nuevo_recibo.*
 import kotlinx.android.synthetic.main.fragment_total.*
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 
 class TotalFragment : Fragment() {
@@ -24,6 +25,7 @@ class TotalFragment : Fragment() {
     var cantidadItems: Int = 0
     var idRecibo: Int = 1
     var nombreCliente: String = ""
+    var total: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,11 +87,12 @@ class TotalFragment : Fragment() {
             }
             viewAdapterProducto.updateList(listProducto)
             var subtotal = 0.0
+            val dec = DecimalFormat("#,###.##")
             for (i in 0 until listProducto.size) {
                 cantidadItems += listProducto[i].cantidad
                 subtotal += listProducto[i].precio * listProducto[i].cantidad
-                var resultado : Double = String.format("%.2f", subtotal).toDouble()
-                tv_total_monto.text = resultado.toString()
+                total = subtotal
+                tv_total_monto.text = dec.format(subtotal)
             }
 
             if (recibo.isNotEmpty()) {
@@ -119,7 +122,7 @@ class TotalFragment : Fragment() {
             .fallbackToDestructiveMigration()
             .build()
 
-        var resumenRecibo = Recibo(idRecibo, nombreCliente, tv_emisor.text.toString(), tv_total_monto.text.toString().toDouble(), cantidadItems)
+        var resumenRecibo = Recibo(idRecibo, nombreCliente, tv_emisor.text.toString(), total, cantidadItems)
 
         lifecycleScope.launch {
             room.reciboDao().insert(resumenRecibo)

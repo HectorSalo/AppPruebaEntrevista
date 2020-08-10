@@ -19,6 +19,7 @@ import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Producto
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
 import kotlinx.android.synthetic.main.fragment_producto.*
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 
 class ProductoFragment : Fragment() {
 
@@ -40,6 +41,8 @@ class ProductoFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_productoFragment_to_SecondFragment)
         }
+
+        val dec = DecimalFormat("#,###.##")
 
         listProducto = ArrayList()
         viewManager = LinearLayoutManager(context)
@@ -71,8 +74,7 @@ class ProductoFragment : Fragment() {
                 var subtotal = 0.0
                 for (i in 0 until listProducto.size) {
                     subtotal += listProducto[i].precio * listProducto[i].cantidad
-                    var resultado : Double = String.format("%.2f", subtotal).toDouble()
-                    tv_subtotal.text = resultado.toString()
+                    tv_subtotal.text = dec.format(subtotal)
                 }
             }
         }
@@ -102,11 +104,6 @@ class ProductoFragment : Fragment() {
 
         imageButton_add_producto.setOnClickListener {
             if (validarDatos()) {
-                var productoBD = Producto(listProducto.size, et_descripcion.text.toString(), et_codigo.text.toString().toInt(), et_precio.text.toString().toDouble(), et_cantidad.text.toString().toInt())
-                lifecycleScope.launch {
-                    room.productoDao().insert(productoBD)
-                }
-
                 var item = ConstructorProducto()
                 item.descripcion = et_descripcion.text.toString()
                 item.codigo = et_codigo.text.toString().toInt()
@@ -118,8 +115,14 @@ class ProductoFragment : Fragment() {
                     var subtotal = 0.0
                     for (i in 0 until listProducto.size) {
                         subtotal += listProducto[i].precio * listProducto[i].cantidad
-                        tv_subtotal.text = subtotal.toString()
+                        tv_subtotal.text = dec.format(subtotal)
                     }
+
+                    var productoBD = Producto(listProducto.size, et_descripcion.text.toString(), et_codigo.text.toString().toInt(), et_precio.text.toString().toDouble(), et_cantidad.text.toString().toInt())
+                    lifecycleScope.launch {
+                        room.productoDao().insert(productoBD)
+                    }
+
                     et_cantidad!!.setText("1")
                     et_codigo.text?.clear()
                     et_descripcion.text?.clear()

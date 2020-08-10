@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thefactoryhka.apppruebaentrevista.R
 import kotlinx.android.synthetic.main.item_producto.view.*
+import java.text.DecimalFormat
 
 class AdapterProducto (private var listProduct: ArrayList<ConstructorProducto>, private val mctx: Context?) :
     RecyclerView.Adapter<AdapterProducto.ViewHolder>() {
@@ -27,15 +28,15 @@ class AdapterProducto (private var listProduct: ArrayList<ConstructorProducto>, 
     override fun getItemCount(): Int = listProduct.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val dec = DecimalFormat("#,###.##")
         var codigo: String = listProduct[position].codigo.toString()
         var precio: String = listProduct[position].precio.toString()
         var cantidad: String = listProduct[position].cantidad.toString()
         var total: Double = listProduct[position].precio * listProduct[position].cantidad
-        var resultado : Double = String.format("%.2f", total).toDouble()
         holder.tvCodigo.text = "Código: $codigo"
         holder.tvPrecioCantidad.text = "$cantidad x $precio"
         holder.tvDescripcion.text = listProduct[position].descripcion
-        holder.tvTotal.text = resultado.toString()
+        holder.tvTotal.text = dec.format(total)
     }
 
     fun updateList (newList: ArrayList<ConstructorProducto>) {
