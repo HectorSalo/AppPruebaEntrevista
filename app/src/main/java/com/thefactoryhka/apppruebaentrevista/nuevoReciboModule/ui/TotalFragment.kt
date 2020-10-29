@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo
+package com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui
 
 import android.os.Bundle
 import android.os.Handler
@@ -8,12 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.thefactoryhka.apppruebaentrevista.R
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Recibo
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
+import com.thefactoryhka.apppruebaentrevista.common.model.ProductoModel
 import kotlinx.android.synthetic.main.activity_nuevo_recibo.*
 import kotlinx.android.synthetic.main.fragment_total.*
 import kotlinx.coroutines.launch
@@ -50,7 +50,7 @@ class TotalFragment : Fragment() {
 
         var identificador = resources.getStringArray(R.array.identificador)
 
-        var listProducto: ArrayList<ConstructorProducto> = ArrayList()
+        var listProducto: ArrayList<ProductoModel> = ArrayList()
         var viewManager = LinearLayoutManager(context)
         var viewAdapterProducto = AdapterProducto(listProducto, context)
         recyclerView_total.apply {
@@ -77,7 +77,7 @@ class TotalFragment : Fragment() {
             tv_cedula.text = "C.I.: ${cliente.cedula}"
 
             for (i in productos.indices) {
-                val item = ConstructorProducto()
+                val item = ProductoModel()
                 item.descripcion = productos[i].descripcion
                 item.precio = productos[i].precio
                 item.cantidad = productos[i].cantidad

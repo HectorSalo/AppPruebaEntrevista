@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.listRecibos
+package com.thefactoryhka.apppruebaentrevista.listRecibosModule
 
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,10 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.thefactoryhka.apppruebaentrevista.R
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
-import com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.AdapterProducto
-import com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.ConstructorProducto
+import com.thefactoryhka.apppruebaentrevista.common.model.ReciboModel
 import kotlinx.android.synthetic.main.activity_list_recibos.*
-import kotlinx.android.synthetic.main.fragment_producto.*
 import kotlinx.coroutines.launch
 
 class ListRecibosActivity : AppCompatActivity() {
@@ -32,7 +29,7 @@ class ListRecibosActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var listRecibo: ArrayList<ConstructorRecibo> = ArrayList()
+        var listRecibo: ArrayList<ReciboModel> = ArrayList()
         var viewManager = LinearLayoutManager(this)
         var viewAdapterListRecibos = AdapterListRecibos(listRecibo, this)
         rv_recibos.apply {
@@ -51,7 +48,7 @@ class ListRecibosActivity : AppCompatActivity() {
             var recibos = room.reciboDao().getAll()
             if (recibos.isNotEmpty()) {
                 for (i in recibos.indices) {
-                    val recibo = ConstructorRecibo()
+                    val recibo = ReciboModel()
                     recibo.emisor = recibos[i].emisor
                     recibo.cliente = recibos[i].cliente
                     recibo.cantidadItems = recibos[i].cantidadItems

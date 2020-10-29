@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui
+package com.thefactoryhka.apppruebaentrevista.homeModule
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

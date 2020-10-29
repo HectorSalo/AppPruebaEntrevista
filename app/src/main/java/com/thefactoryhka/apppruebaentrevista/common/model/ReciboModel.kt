@@ -1,6 +1,6 @@
-package com.thefactoryhka.apppruebaentrevista.ui.listRecibos
+package com.thefactoryhka.apppruebaentrevista.common.model
 
-class ConstructorRecibo {
+class ReciboModel {
     var cliente: String = ""
     var emisor: String = ""
     var total: Double = 0.0
