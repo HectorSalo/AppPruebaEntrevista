@@ -1,6 +1,6 @@
-package com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo
+package com.thefactoryhka.apppruebaentrevista.common.model
 
-class ConstructorProducto {
+class ProductoModel {
     var descripcion: String = ""
     var codigo: Int = 0
     var precio: Double = 0.0

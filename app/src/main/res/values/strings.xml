@@ -8,6 +8,8 @@
     <string name="texto_vacio"> </string>
     <string name="title_activity_nuevo_recibo">Generar Recibo de Venta</string>
     <string name="title_activity_lista_recibos">Recibos Almacenados</string>
+
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">Datos del Cliente</string>
     <string name="second_fragment_label">Datos del Emisor</string>

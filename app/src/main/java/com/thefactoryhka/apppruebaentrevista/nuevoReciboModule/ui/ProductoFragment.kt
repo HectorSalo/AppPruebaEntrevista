@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo
+package com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,13 +10,13 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.thefactoryhka.apppruebaentrevista.R
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Producto
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
+import com.thefactoryhka.apppruebaentrevista.common.model.ProductoModel
 import kotlinx.android.synthetic.main.fragment_producto.*
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -25,7 +25,7 @@ class ProductoFragment : Fragment() {
 
     private lateinit var viewAdapterProducto: AdapterProducto
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var listProducto: ArrayList<ConstructorProducto>
+    private lateinit var listProducto: ArrayList<ProductoModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +62,7 @@ class ProductoFragment : Fragment() {
             var productos = room.productoDao().getAll()
             if (productos != null) {
                 for (i in 0 until productos.size) {
-                    val item = ConstructorProducto()
+                    val item = ProductoModel()
                     item.descripcion = productos[i].descripcion
                     item.precio = productos[i].precio
                     item.cantidad = productos[i].cantidad
@@ -104,7 +104,7 @@ class ProductoFragment : Fragment() {
 
         imageButton_add_producto.setOnClickListener {
             if (validarDatos()) {
-                var item = ConstructorProducto()
+                var item = ProductoModel()
                 item.descripcion = et_descripcion.text.toString()
                 item.codigo = et_codigo.text.toString().toInt()
                 item.cantidad = et_cantidad.text.toString().toInt()

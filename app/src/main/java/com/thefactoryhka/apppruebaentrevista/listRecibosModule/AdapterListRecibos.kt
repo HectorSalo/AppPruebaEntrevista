@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.listRecibos
+package com.thefactoryhka.apppruebaentrevista.listRecibosModule
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thefactoryhka.apppruebaentrevista.R
-import com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.ConstructorProducto
+import com.thefactoryhka.apppruebaentrevista.common.model.ReciboModel
 import kotlinx.android.synthetic.main.item_producto.view.*
 import java.text.DecimalFormat
 
-class AdapterListRecibos (private var listRecibos: ArrayList<ConstructorRecibo>, private val mctx: Context?) :
+class AdapterListRecibos (private var listRecibos: ArrayList<ReciboModel>, private val mctx: Context?) :
     RecyclerView.Adapter<AdapterListRecibos.ViewHolder>() {
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val tvCliente: TextView = view.tv_codigo
@@ -42,7 +42,7 @@ class AdapterListRecibos (private var listRecibos: ArrayList<ConstructorRecibo>,
         holder.tvTotal.textSize = 16f
     }
 
-    fun updateList (newList: ArrayList<ConstructorRecibo>) {
+    fun updateList (newList: ArrayList<ReciboModel>) {
         listRecibos = ArrayList()
         listRecibos = newList
         notifyDataSetChanged()

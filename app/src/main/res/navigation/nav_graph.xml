@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.ClienteFragment"
+        android:name="com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui.ClienteFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_cliente">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.EmisorFragment"
+        android:name="com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui.EmisorFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_emisor">
 
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/productoFragment"
-        android:name="com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.ProductoFragment"
+        android:name="com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui.ProductoFragment"
         android:label="fragment_producto"
         tools:layout="@layout/fragment_producto" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/totalFragment"
-        android:name="com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo.TotalFragment"
+        android:name="com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui.TotalFragment"
         android:label="fragment_total"
         tools:layout="@layout/fragment_total" />
 </navigation>

@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.listRecibos.ListRecibosActivity"
+        <activity android:name="com.thefactoryhka.apppruebaentrevista.listRecibosModule.ListRecibosActivity"
             android:label="@string/title_activity_lista_recibos"/>
         <activity
-            android:name=".ui.nuevoRecibo.NuevoReciboActivity"
+            android:name="com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui.NuevoReciboActivity"
             android:label="@string/title_activity_nuevo_recibo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.LaunchActivity"
+            android:name=".homeModule.LaunchActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.MainActivity" />
+        <activity android:name=".homeModule.MainActivity" />
     </application>
 
 </manifest>

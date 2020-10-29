@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo
+package com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.thefactoryhka.apppruebaentrevista.R
+import com.thefactoryhka.apppruebaentrevista.common.model.ProductoModel
 import kotlinx.android.synthetic.main.item_producto.view.*
 import java.text.DecimalFormat
 
-class AdapterProducto (private var listProduct: ArrayList<ConstructorProducto>, private val mctx: Context?) :
+class AdapterProducto (private var listProduct: ArrayList<ProductoModel>, private val mctx: Context?) :
     RecyclerView.Adapter<AdapterProducto.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(mctx).inflate(R.layout.item_producto, parent, false) as View
@@ -39,7 +40,7 @@ class AdapterProducto (private var listProduct: ArrayList<ConstructorProducto>, 
         holder.tvTotal.text = dec.format(total)
     }
 
-    fun updateList (newList: ArrayList<ConstructorProducto>) {
+    fun updateList (newList: ArrayList<ProductoModel>) {
         listProduct = ArrayList()
         listProduct = newList
         notifyDataSetChanged()

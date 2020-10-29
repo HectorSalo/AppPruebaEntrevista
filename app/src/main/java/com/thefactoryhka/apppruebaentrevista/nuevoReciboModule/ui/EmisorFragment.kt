@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.ui.nuevoRecibo
+package com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
