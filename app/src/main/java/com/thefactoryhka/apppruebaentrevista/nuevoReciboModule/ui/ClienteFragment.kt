@@ -111,4 +111,9 @@ class ClienteFragment : Fragment(), ClienteView {
     override fun eliminarExitoso() {
         requireActivity().finish()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

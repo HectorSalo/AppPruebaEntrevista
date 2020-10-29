@@ -80,7 +80,7 @@ class ListRecibosActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("¿Desea borrar todos los Recibos?")
                     .setMessage("Esta acción no se puede deshacer")
-                    .setPositiveButton("Borrar") { dialogInterface, i ->
+                    .setPositiveButton("Borrar") { _, _ ->
                         val room = Room
                             .databaseBuilder(this, ReciboDB::class.java, "recibo")
                             .fallbackToDestructiveMigration()
@@ -92,7 +92,7 @@ class ListRecibosActivity : AppCompatActivity() {
                             tv_lista_vacia.visibility = View.VISIBLE
                         }
                     }
-                    .setNegativeButton("NO") { dialogInterface, i ->  }
+                    .setNegativeButton("NO") { _, _ ->  }
                     .show()
             }
         }
