@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.listRecibosModule
+package com.thefactoryhka.apppruebaentrevista.listRecibosModule.ui
 
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,15 +13,29 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.thefactoryhka.apppruebaentrevista.R
+import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Recibo
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
 import com.thefactoryhka.apppruebaentrevista.common.model.ReciboModel
+import com.thefactoryhka.apppruebaentrevista.databinding.ActivityListRecibosBinding
+import com.thefactoryhka.apppruebaentrevista.listRecibosModule.presenter.ListReciboPresenterClass
+import com.thefactoryhka.apppruebaentrevista.listRecibosModule.presenter.ListRecibosPresenter
 import kotlinx.android.synthetic.main.activity_list_recibos.*
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
-class ListRecibosActivity : AppCompatActivity() {
+class ListRecibosActivity : AppCompatActivity(), ListaRecibosView {
+
+    private lateinit var binding: ActivityListRecibosBinding
+    private lateinit var listRecibo: ArrayList<ReciboModel>
+    private lateinit var viewAdapterListRecibos: AdapterListRecibos
+    private lateinit var listRecibosPresenter: ListRecibosPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_list_recibos)
+        binding = ActivityListRecibosBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        listRecibosPresenter = ListReciboPresenterClass(this, this)
 
         onBackPressedDispatcher.addCallback(this) {
             finish()
@@ -29,39 +43,18 @@ class ListRecibosActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var listRecibo: ArrayList<ReciboModel> = ArrayList()
-        var viewManager = LinearLayoutManager(this)
-        var viewAdapterListRecibos = AdapterListRecibos(listRecibo, this)
-        rv_recibos.apply {
+        listRecibo = ArrayList()
+        val viewManager = LinearLayoutManager(this)
+        viewAdapterListRecibos = AdapterListRecibos(listRecibo, this)
+        binding.rvRecibos.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapterListRecibos
             addItemDecoration(DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL))
         }
 
-        val room = Room
-            .databaseBuilder(this, ReciboDB::class.java, "recibo")
-            .fallbackToDestructiveMigration()
-            .build()
+        listRecibosPresenter.onCreate()
 
-        lifecycleScope.launch {
-            var recibos = room.reciboDao().getAll()
-            if (recibos.isNotEmpty()) {
-                for (i in recibos.indices) {
-                    val recibo = ReciboModel()
-                    recibo.emisor = recibos[i].emisor
-                    recibo.cliente = recibos[i].cliente
-                    recibo.cantidadItems = recibos[i].cantidadItems
-                    recibo.total = recibos[i].total
-
-                    listRecibo.add(recibo)
-                }
-                viewAdapterListRecibos.updateList(listRecibo)
-            } else {
-                rv_recibos.visibility = View.GONE
-                tv_lista_vacia.visibility = View.VISIBLE
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -81,21 +74,35 @@ class ListRecibosActivity : AppCompatActivity() {
                 builder.setTitle("¿Desea borrar todos los Recibos?")
                     .setMessage("Esta acción no se puede deshacer")
                     .setPositiveButton("Borrar") { _, _ ->
-                        val room = Room
-                            .databaseBuilder(this, ReciboDB::class.java, "recibo")
-                            .fallbackToDestructiveMigration()
-                            .build()
-
-                        lifecycleScope.launch {
-                            room.reciboDao().deleteAll()
-                            rv_recibos.visibility = View.GONE
-                            tv_lista_vacia.visibility = View.VISIBLE
-                        }
+                        listRecibosPresenter.eliminarLista()
                     }
                     .setNegativeButton("NO") { _, _ ->  }
                     .show()
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun listaRecibos(recibos: List<Recibo>) {
+        if (recibos.isNotEmpty()) {
+            for (i in recibos.indices) {
+                val recibo = ReciboModel()
+                recibo.emisor = recibos[i].emisor
+                recibo.cliente = recibos[i].cliente
+                recibo.cantidadItems = recibos[i].cantidadItems
+                recibo.total = recibos[i].total
+
+                listRecibo.add(recibo)
+            }
+            viewAdapterListRecibos.updateList(listRecibo)
+        } else {
+            binding.rvRecibos.visibility = View.GONE
+            binding.tvListaVacia.visibility = View.VISIBLE
+        }
+    }
+
+    override fun listaEliminada() {
+        binding.rvRecibos.visibility = View.GONE
+        binding.tvListaVacia.visibility = View.VISIBLE
     }
 }

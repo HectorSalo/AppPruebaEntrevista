@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.thefactoryhka.apppruebaentrevista.databinding.ActivityMainBinding
-import com.thefactoryhka.apppruebaentrevista.listRecibosModule.ListRecibosActivity
+import com.thefactoryhka.apppruebaentrevista.listRecibosModule.ui.ListRecibosActivity
 import com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.ui.NuevoReciboActivity
 
 class MainActivity : AppCompatActivity() {

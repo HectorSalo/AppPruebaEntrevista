@@ -15,14 +15,17 @@ import com.thefactoryhka.apppruebaentrevista.R
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.Emisor
 import com.thefactoryhka.apppruebaentrevista.baseDeDatos.ReciboDB
 import com.thefactoryhka.apppruebaentrevista.databinding.FragmentEmisorBinding
+import com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.presenter.EmisorPresenter
+import com.thefactoryhka.apppruebaentrevista.nuevoReciboModule.presenter.EmisorPresenterClass
 import kotlinx.android.synthetic.main.fragment_emisor.*
 import kotlinx.coroutines.launch
 
 
-class EmisorFragment : Fragment() {
+class EmisorFragment : Fragment(), EmisorView {
 
     private var _binding: FragmentEmisorBinding? = null
     private val binding get() = _binding!!
+    private lateinit var emisorPresenter: EmisorPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,22 +38,10 @@ class EmisorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        emisorPresenter = EmisorPresenterClass(requireContext(), this)
+
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
-
-        val room = Room
-            .databaseBuilder(requireContext(), ReciboDB::class.java, "recibo")
-            .fallbackToDestructiveMigration()
-            .build()
-
-        lifecycleScope.launch {
-            var emisor = room.emisorDao().getById(1)
-            if (emisor != null) {
-                et_emisor.setText(emisor.razonSocial)
-                et_rif.setText(emisor.rif.toString())
-                spinner.setSelection(emisor.identificador)
-            }
         }
 
         ArrayAdapter.createFromResource(requireContext(), R.array.identificador, android.R.layout.simple_spinner_item).
@@ -59,37 +50,35 @@ class EmisorFragment : Fragment() {
             binding.spinner.adapter = adapter
         }
 
+        emisorPresenter.onCreate()
+
         binding.buttonAnterior.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
         binding.buttonSiguiente.setOnClickListener {
             if (validarDatos()) {
-                var emisor = Emisor(1, et_emisor.text.toString(), et_rif.text.toString().toInt(), spinner.selectedItemPosition)
-                lifecycleScope.launch {
-                    room.emisorDao().deleteAll()
-                    room.emisorDao().insert(emisor)
-                }
-                findNavController().navigate(R.id.action_SecondFragment_to_productoFragment)
+                emisorPresenter.guardarEmisor(binding.etEmisor.text.toString(), binding.etRif.text.toString().toInt(),
+                binding.spinner.selectedItemPosition)
             }
         }
     }
 
     private fun validarDatos() : Boolean {
-        outlined_emisor.error = null
-        outlined_rif.error = null
+        binding.outlinedEmisor.error = null
+        binding.outlinedRif.error = null
 
-        if (et_emisor.text.isNullOrEmpty()) {
-            outlined_emisor.error = "Debe ingresar el emisor"
+        if (binding.etEmisor.text.isNullOrEmpty()) {
+            binding.outlinedEmisor.error = "Debe ingresar el emisor"
             return false
         }
-        if (et_rif.text.isNullOrEmpty()) {
-            outlined_rif.error = "Debe ingresar el RIF"
+        if (binding.etRif.text.isNullOrEmpty()) {
+            binding.outlinedRif.error = "Debe ingresar el RIF"
             return false
         }
-        var rif = et_rif.text.toString().toInt()
+        val rif = binding.etRif.text.toString().toInt()
         if (rif < 1) {
-            outlined_rif.error = "El RIF no puede ser cero"
+            binding.outlinedRif.error = "El RIF no puede ser cero"
             return false
         }
         return true
@@ -98,5 +87,15 @@ class EmisorFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun emisorGuardado(razonSocial: String?, rif: Int?, identificador: Int?) {
+        binding.etEmisor.setText(razonSocial)
+        binding.etRif.setText(rif.toString())
+        binding.spinner.setSelection(identificador!!)
+    }
+
+    override fun guardarExitoso() {
+        findNavController().navigate(R.id.action_SecondFragment_to_productoFragment)
     }
 }

@@ -1,4 +1,4 @@
-package com.thefactoryhka.apppruebaentrevista.listRecibosModule
+package com.thefactoryhka.apppruebaentrevista.listRecibosModule.ui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -23,15 +23,15 @@ class AdapterListRecibos (private var listRecibos: ArrayList<ReciboModel>, priva
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AdapterListRecibos.ViewHolder {
+    ): ViewHolder {
         val view = LayoutInflater.from(mctx).inflate(R.layout.item_producto, parent, false) as View
 
-        return AdapterListRecibos.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int = listRecibos.size
 
-    override fun onBindViewHolder(holder: AdapterListRecibos.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dec = DecimalFormat("#,###.##")
         var total = listRecibos[position].total
         holder.tvCliente.text = "Cliente: ${listRecibos[position].cliente}"

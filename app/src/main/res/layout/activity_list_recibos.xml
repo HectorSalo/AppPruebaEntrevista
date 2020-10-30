@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".listRecibosModule.ListRecibosActivity">
+    tools:context=".listRecibosModule.ui.ListRecibosActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recibos"
